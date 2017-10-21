@@ -1,0 +1,1 @@
+This was a tools whilst working at Beakus to manage distributed rendering fo After Effects projects, as we didn't have a dedicated render farm to manage this.

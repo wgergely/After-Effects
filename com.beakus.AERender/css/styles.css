@@ -1,0 +1,77 @@
+/*Your styles*/
+
+body {
+    width:175px;
+    margin: 0;
+    overflow: hidden;
+}
+
+#content {
+    width:100%;
+    margin-right:auto;
+    margin-left:auto;
+    text-align:center;
+}
+
+.row{
+    margin: 3px 0;
+    width: 100%;
+}
+
+.submitrow {
+    margin: 3px 0 8px 0;
+}
+
+.clients, {
+    width:100%;
+    background-color: rgb(50,50,50);
+}
+
+/*Buttons*/
+
+/*Fiexed width for clients */
+.fixed{
+    float:left;
+    width:58.333px;
+}
+
+#openProgress,#openOutputFolder{
+    float:left;
+    width: 50%;
+}
+#FFMpeg_h264,#FFMpeg_h264_sm,#FFMpeg_h264_tc{
+    float:left;
+    width: 33.3332%;
+}
+#FFMpeg_prores,#submit{
+    float:left;
+    width: 100%;
+}
+
+#submit:hover,#open:hover{
+background-color: rgb(113, 232, 172);
+color:rgb(255,255,255);
+}
+#kill:hover{
+background-color: rgb(232, 113, 113);
+color:rgb(41, 41, 41);
+}
+
+/*
+Those classes will be edited at runtime with values specified
+by the settings of the CC application
+*/
+.hostFontColor{}
+.hostFontFamily{}
+.hostFontSize{}
+
+/*font family, color and size*/
+.hostFont{}
+/*background color*/
+.hostBgd{}
+/*lighter background color*/
+.hostBgdLight{}
+/*darker background color*/
+.hostBgdDark{}
+/*background color and font*/
+.hostElt{}

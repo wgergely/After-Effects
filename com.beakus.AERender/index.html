@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+        
+<link rel="stylesheet" href="css/topcoat-desktop-dark.min.css"/>
+<link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
+
+<title></title>
+</head>
+
+<body class="hostElt">
+    <div id="content">
+        <div id="clientPool" class="clients">
+
+        </div>
+        <div class="clients">
+            <button id="togglePool" class="hostFontSize topcoat-button--quiet">...</button>
+            <button id="all" class="hostFontSize topcoat-button">All</button>
+            <button id="allNoLocal" class="topcoat-button hostFontSize">All -noLocal </button>
+            <button id="local" class="topcoat-button hostFontSize">Local</button>
+        </div>
+        <div class="row">
+            <button id="submit" class="topcoat-button hostFontSize">Submit</button>
+        </div>
+        <div class="row">
+            <button id="status" class="topcoat-button--quiet hostFontSize">Check</button>
+            <button id="kill" class="topcoat-button--quiet hostFontSize">Kill</button>
+        </div>
+        <div class="row">
+            <div class="row">
+                <button id="openProgress" class="topcoat-button--quiet hostFontSize">Show Info</button>
+                <button id="openOutputFolder" class="topcoat-button--quiet hostFontSize">Output Folder</button>
+            </div>
+            <div class="row">Make Movie</div>
+            <div class="row">
+                <button id="FFMpeg_h264" class="topcoat-button--quiet hostFontSize">h264</button>
+                <button id="FFMpeg_h264_sm" class="topcoat-button--quiet hostFontSize">h264_sm</button>
+                <button id="FFMpeg_h264_tc" class="topcoat-button--quiet hostFontSize">h264+TC</button>
+            </div>
+            <div class="row">
+                <button id="FFMpeg_prores" class="topcoat-button--quiet hostFontSize">ProRes422</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/libs/CSInterface.js"></script>
+    <script src="js/libs/jquery-2.0.2.min.js"></script>
+
+    <script src="js/themeManager.js"></script>
+    <script src="js/main.js"></script>
+ 
+</body>
+</html>
