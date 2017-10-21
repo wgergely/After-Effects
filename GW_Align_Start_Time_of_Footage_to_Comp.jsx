@@ -1,4 +1,6 @@
-﻿/*
+#target aftereffects
+
+/*
     Match Sequence Footage inPoint
 */
 
@@ -15,16 +17,16 @@ var matchInPoint = {
             source = null;
             try { activeItem = p.activeItem } catch(e){};
             try { selectedLayers = activeItem.selectedLayers } catch(e){};
-             
+
         if (activeItem && selectedLayers ) {
-            
+
             var match = '',
                 oneframe = activeItem.frameDuration,
                 displayStartTime = activeItem.displayStartTime,
                 startTime,
                 isFootage,
                 inFrame = 0;
-                
+
             for (var i = 0; i < selectedLayers.length; i++) {
                 try { source = selectedLayers[i].source } catch(e){}
                 if (source instanceof FootageItem) {
@@ -35,13 +37,13 @@ var matchInPoint = {
                         $.writeln (  inFrame );
                         startTime = ( parseInt( inFrame, 10) * oneframe ) - displayStartTime;
                         $.writeln ( startTime / oneframe );
-                        
+
                         selectedLayers[i].startTime = startTime;
                     }
                 } else {
                    $.writeln ( source.name + ' is a not a FootageItem.' )
                 }
-            } 
+            }
         } else {
             $.writeln ('No Selection');
         }

@@ -1,4 +1,6 @@
-﻿/*
+# target aftereffects
+
+/*
 After Effects - Export Comp
 v0.1.0
 
@@ -42,7 +44,7 @@ function init(){
     newItem,
     importFolderExists = false,
     numVersion = [];
-    
+
     if (!app.project.file) {
         importFile = File.openDialog( 'Select .aep File to Import', 'After Effects Project Files:*.aep', false );
     }
@@ -51,14 +53,14 @@ function init(){
         importFile.openDlg( 'Select .aep File to Import', 'After Effects Project Files:*.aep' );
     }
     if (importFile)
-    {   
+    {
         var importOptions = new ImportOptions( importFile );
         if (importOptions.canImportAs(ImportAsType.COMP)) {
-            importOptions.importAs = ImportAsType.COMP 
+            importOptions.importAs = ImportAsType.COMP
         };
-        p.importFile(importOptions); 
+        p.importFile(importOptions);
     }
-    
+
     for ( i = 1; i <= p.numItems; i++ )
     {
         if ((p.item(i) instanceof FolderItem) && (p.item(i).name === 'imports')) {
@@ -85,7 +87,7 @@ function init(){
             } else {
                 for (var j = exportsFolder.numItems; j >= 1; j--) {
                     newItem = exportsFolder.item(j);
-                    
+
                     numVersion = [];
                     for (var x = 1; x <= importsFolder.numItems; x++){
                         oldItem = importsFolder.item(x);
@@ -107,4 +109,3 @@ function init(){
         }
     }
 }
-

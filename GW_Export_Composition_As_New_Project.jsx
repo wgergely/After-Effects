@@ -1,7 +1,7 @@
 #target aftereffects
 
 /*
-After Effects - Export Comp
+After Effects - Export Composition as New Project
 v0.1.0
 
 This script exports selected composition as a new .aep file.
