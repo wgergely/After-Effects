@@ -1,3 +1,13 @@
+// Render Queue +
+//
+// A render queue tool to manage rendering images sequences on local, or small distributed networks.
+// Currently only compatible with Windows.
+//
+// Gergely Wootsch, 2017
+// hello@gergely-wootsch
+// http://gergely-wootsch.com
+
+
 var RenderQueuePlus = (function ( thisObj ) {
 
     //Extensions
