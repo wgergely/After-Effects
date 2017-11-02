@@ -1,50 +1,3 @@
-#target aftereffects
-
-/*
-Render Queue +
-Gergely Wootsch, hello@gergely-wootsch.com
-
-This is a pipeline utility to manage Render Queue output naming, location and versioning.
-TODO - Not currently compatible with After Effects 2018 due to depreciated scripting methods in the release
-
-I was originally intending this to be a cross platform tool but it only has been implemented to work with windows.
-Has not been tested on Windows 10 so far.
-
-Installation
-------------
-
-To install the script, place it into the After Effects 'ScriptUI Panels' folder,
-usually found at
-
-'C:\Program Files\Adobe\<After Effects Version>\Support Files\ScriptUI Panels'
-Alternatively, it's possible to run it as a script (via File>Run Script..) but it was intended to be a ScriptUI panel.
-
-Licence
-------------
-
-Copyright (c) 2017 Gergely Wootsch <hello@gergely-wootsch.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
-
-
-
 var RenderQueuePlus = (function ( thisObj ) {
 
     //Extensions
@@ -682,15 +635,17 @@ var RenderQueuePlus = (function ( thisObj ) {
                     string;
 
                 if (File.fs == 'Windows') {
-                    if ( version >= 14 && version < 14.5 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2017\\Support Files\\aerender.exe' )};
-                    if ( version >= 13.5 && version < 14 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2015\\Support Files\\aerender.exe' )};
+                    if ( version >= 14.4 && version <= 15 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2018\\Support Files\\aerender.exe' )};
+                    if ( version >= 13.8 && version <= 14 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2017\\Support Files\\aerender.exe' )};
+                    if ( version >= 13.7 && version <= 13.8 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2015.3\\Support Files\\aerender.exe' )};
+                    if ( version >= 13.5 && version <= 13.6 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2015\\Support Files\\aerender.exe' )};
                     if ( version >= 13 && version < 13.5 ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC 2014\\Support Files\\aerender.exe' )};
                     if ( version >= 12 && version < 13   ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CC\\Support Files\\aerender.exe' )};
                     if ( version >= 11 && version < 12   ) { aerender.changePath( 'C:\\Program Files\\Adobe\\Adobe After Effects CS6\\Support Files\\aerender.exe' )};
                 }
                 if (File.fs == 'Macintosh') {
-                    if ( version >= 14 && version < 14.5 ) { aerender.changePath( '/Applications/Adobe After Effects 2017/aerender' ) };
-                    if ( version >= 13.5 && version < 14 ) { aerender.changePath( '/Applications/Adobe After Effects 2015/aerender' ) };
+                    if ( version >= 13.8 && version < 14 ) { aerender.changePath( '/Applications/Adobe After Effects 2017/aerender' ) };
+                    if ( version >= 13.5 && version < 13.8 ) { aerender.changePath( '/Applications/Adobe After Effects 2015/aerender' ) };
                     if ( version >= 13 && version < 13.5 ) { aerender.changePath( '/Applications/Adobe After Effects 2014/aerender' ) };
                     if ( version >= 12 && version < 13   ) { aerender.changePath( '/Applications/Adobe After Effects CC/aerender' ) };
                     if ( version >= 11 && version < 12   ) { aerender.changePath( '/Applications/Adobe After Effects CS6/aerender' ) };
@@ -1756,8 +1711,8 @@ var RenderQueuePlus = (function ( thisObj ) {
                         dataObj.set = (function () {
 
                             var oneframe = dataObj.rqItem.comp.frameDuration;
-                            dataObj.startframe = Math.round((dataObj.rqItem.timeSpanStart / oneframe) + (dataObj.rqItem.comp.displayStartTime / oneframe)),
-                            dataObj.endframe = Math.round((dataObj.rqItem.timeSpanStart + dataObj.rqItem.timeSpanDuration) /  oneframe) + (dataObj.rqItem.comp.displayStartTime / oneframe) - 1,
+                            dataObj.startframe = Math.round((dataObj.rqItem.timeSpanStart / oneframe) + (dataObj.rqItem.comp.displayStartTime / oneframe)) + 1,
+                            dataObj.endframe = Math.round((dataObj.rqItem.timeSpanStart + dataObj.rqItem.timeSpanDuration) /  oneframe) + (dataObj.rqItem.comp.displayStartTime / oneframe),
                             dataObj.duration = dataObj.endframe - dataObj.startframe + 1;
 
                             var stat, count;
@@ -2108,14 +2063,14 @@ var RenderQueuePlus = (function ( thisObj ) {
             this.filenames = (function() {
                 var arr = [];
                 if ( DATA.length === 0 ) {
-                    arr = ['No active output modules found.']
+                    arr = ['No active output modules found']
                     return arr
                 } else {
                     for (var i = 0; i < DATA.length; i++) {
                         if (DATA[i].file) {
                             arr.push( DATA[i].filename );
                         } else {
-                            arr.push( 'No valid output set.' );
+                            arr.push( 'Unqueued' );
                         }
                     }
                     return arr
@@ -2124,7 +2079,7 @@ var RenderQueuePlus = (function ( thisObj ) {
             this.durations = (function() {
                 var arr = [];
                 if ( DATA.length === 0 ) {
-                    arr = ['No active output modules found.']
+                    arr = ['No active output modules found']
                     return arr
                 } else {
                     for (var i = 0; i < DATA.length; i++) {
