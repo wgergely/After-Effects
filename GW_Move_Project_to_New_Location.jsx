@@ -576,8 +576,9 @@ return cls
 var move = new Move();
 var footageItems = new Collect();
 var popup = new ListWindow();
-popup.setlist( footageItems.indexes, footageItems.locations )
 
+popup.setlist( footageItems.indexes, footageItems.locations )
 popup.show()
+
 if ( popup.response() ){
 }
