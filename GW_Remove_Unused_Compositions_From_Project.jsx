@@ -1,329 +1,460 @@
-#target aftereffects
+/* Gergely Wootsch, hello@gergely-wootsch.com
 
-/*
-Gergely Wootsch, hello@gergely-wootsch.com
 Written whilst working on A Monster Calls, 2015, to deal with complex projects.
 
-This script was written to help keeping After Effects projects organised, and optimised.
-The script will list compositions that are not referenced in other compositions.
+This script was written to help keeping After Effects projects organised, and
+optimised. The script will list compositions that are not referenced in other
+compositions.
 
-!! IMPORTANT - the script does NOT check expression linking so be very careful when using it,
-it will only check if a composition is an item of another composition.
+!! IMPORTANT - the script does NOT check expression linking so be very careful
+when using it, it will only check if a composition is an item of another
+composition.
 
-Licence
-------------
+Licence ------------
 
 Copyright (c) 2017 Gergely Wootsch <hello@gergely-wootsch.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is0x0Afurnished to do
+so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-{ //extensions
-    function ellipsis( inString ) {
-        if (inString.length > 250) {
-            return inString.substr(0, 115) + '  (.....)  ' + inString.substr(inString.length - 125, inString.length);
-        }
-        return inString;
-    }
-} //extensions
+var STRING_LENGTH = 250;
 
-var Collect = (function () {
-    /**/
-    //Globals
-    {
-        var obj  = {};
-        var objs = [];
-        var items = app.project.items;
+/**
+ * Clips an input string
+ * @param  {[string]}  s [description]
+ * @return {string}          [description]
+ */
+function ellipsis( s ) {
+    var dots = '  (.....)  ';
+    var half = (dots.length - 10) / 2;
+    if (s.length > STRING_LENGTH) {
+        return s.substr(0, half) + dots + s.substr(s.length - half, s.length);
     }
-    //Constructor
-    var cls = function () {
-        this.items = function () {
+    return s;
+}
+
+var Collect = (function() {
+    var obj = {};
+    var objs = [];
+    var items = app.project.items;
+
+    var cls = function() {
+        this.items = function() {
             objs = [];
+
             for (var i = 1; i <= items.length; i++) {
-                if (items[i] instanceof CompItem && ( items[i].usedIn.length === 0) ){
-                    obj  = {
+                if (!(items[i] instanceof CompItem)) {
+                  continue;
+                }
+
+                if (items[i].usedIn.length === 0) {
+                    obj = {
                         id: null,
                         compitem: null,
-                        compname: null
+                        compname: null,
                     };
                     obj.id = items[i].id;
                     obj.compitem = items[i];
                     obj.compname = items[i].name;
-                    objs.push( obj )
+                    objs.push(obj);
                 }
             }
-            return objs
-        }
+            return objs;
+        };
 
-        this.compnames = function () {
-            var arr = []
+        this.compnames = function() {
+            var arr = [];
             if (objs.length === 0) {
-                return arr
+                return arr;
             } else {
-                for (var i = 0; i < objs.length; i++){
-                    arr.push ( objs[i].compname );
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].compname);
                 }
-                return arr
+                return arr;
             }
-        } //compnames
+        };
 
-        this.ids = function () {
-            var arr = []
+        this.ids = function() {
+            var arr = [];
             if (objs.length === 0) {
-                return arr
+                return arr;
             } else {
-                for (var i = 0; i < objs.length; i++){
-                    arr.push ( objs[i].id );
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].id);
                 }
-                return arr
+                return arr;
             }
-        }
-        this.compitems = function () {
-            var arr = []
+        };
+
+        this.compitems = function() {
+            var arr = [];
             if (objs.length === 0) {
-                return arr
+                return arr;
             } else {
-                for (var i = 0; i < objs.length; i++){
-                    arr.push ( objs[i].compitem );
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].compitem);
                 }
-                return arr
+                return arr;
             }
-        }
-    }
-    return cls
-})()
+        };
+    };
+    return cls;
+})();
 
+var Collect = (function() {
+    var obj = {};
+    var objs = [];
+    var items = app.project.items;
 
+    var cls = function() {
+        this.items = function() {
+            objs = [];
 
-var ListWindow = (function (thisObj, inTitle, inNumColumns, columnTitles) {
-    /*
-      List Window Object
-      Creates a new Window with an editable List Item.
+            for (var i = 1; i <= items.length; i++) {
+                if (!(items[i] instanceof CompItem)) {
+                  continue;
+                }
 
-      Usage:
-      var popup = new PopupWindow();
+                if (items[i].usedIn.length === 0) {
+                    obj = {
+                        id: null,
+                        compitem: null,
+                        compname: null,
+                    };
+                    obj.id = items[i].id;
+                    obj.compitem = items[i];
+                    obj.compname = items[i].name;
+                    objs.push(obj);
+                }
+            }
+            return objs;
+        };
 
-      Methods
-      popup.show();
-      popup.hide();
-      popup.clear();
-      popup.setlist( arr1, arr2, arr3, arr4 )
-    */
+        this.compnames = function() {
+            var arr = [];
+            if (objs.length === 0) {
+                return arr;
+            } else {
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].compname);
+                }
+                return arr;
+            }
+        };
 
+        this.ids = function() {
+            var arr = [];
+            if (objs.length === 0) {
+                return arr;
+            } else {
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].id);
+                }
+                return arr;
+            }
+        };
 
-    if ( inTitle == null ){ var title = '' } else { var title = inTitle }
-    var numColumns = inNumColumns;
-    var response;
-    var destination;
-    var prompt;
+        this.compitems = function() {
+            var arr = [];
+            if (objs.length === 0) {
+                return arr;
+            } else {
+                for (var i = 0; i < objs.length; i++) {
+                    arr.push(objs[i].compitem);
+                }
+                return arr;
+            }
+        };
+    };
+    return cls;
+})();
 
-    var palette = thisObj instanceof Panel ? thisObj : new Window('palette', title,undefined, {
-        resizeable: false,
-        alignChildren: ['fill','fill'],
-        preferredSize: [900, 600],
-        margins: 10,
-        spacing: 10
-    });
-    if (palette == null) return;
+/**
+ * ListWindow
+ * @param  {object}   thisObj       [description]
+ * @param  {string}   inTitle       [description]
+ * @param  {integer}  inNumColumns  [description]
+ * @param  {array}    columnTitles  [description]
+ * @return {none}
+ */
+var ListWindow = (function(thisObj, inTitle, inNumColumns, columnTitles) {
+    var WINDOW_WIDTH = 900;
+    var WINDOW_HEIGHT = 600;
 
+    var data = new Collect();
+    var palette;
+    var listItem;
+    var button_remove;
 
-    { //Event Functions
+    var cls = function() {
+        var cls = this;
 
-        function button_remove_onClick () {
+        this.button_remove_onClick = function() {
             app.beginUndoGroup('Remove Unused Comp Item');
-            for ( var i = listItem.selection.length - 1; i >= 0; i-- ) {
-                 for ( var j = app.project.items.length; j >= 1; j-- ) {
-                    if ( parseInt( listItem.selection[i].text, 10 ) === app.project.items[j].id ) {
-                        app.project.items[ j ].remove();
-                        break;
-                    }
-                 }
-                listItem.selection[ i ].text = 'Removed.';
-                listItem.selection[ i ].enabled = false;
-                button_remove.enabled = false;
+
+            var i = listItem.selection.length;
+            var id;
+
+            while (i--) {
+              for (var j = app.project.items.length; j >= 1; j--) {
+                  id = parseInt(listItem.selection[i].text, 10);
+                  if ( id === app.project.items[j].id) {
+                      app.project.items[j].remove();
+                      break;
+                  }
+              }
+              listItem.selection[i].text = 'Removed.';
+              listItem.selection[i].enabled = false;
+              button_remove.enabled = false;
             }
-            app.endUndoGroup;
-        }
 
-        function button_refresh_onClick () {
-            popup.clear()
-            unused.items();
-            popup.setlist(unused.ids(), unused.compnames() )
-            button_remove.enabled = true;
-        }
-
-        function button_removeunused_onClick () {
-            app.beginUndoGroup('Remove Unused Footage')
-                var num = app.project.removeUnusedFootage();
-                popup.clear()
-                unused.items();
-                popup.setlist(unused.ids(), unused.compnames() )
-                alert('Removed ' + num + ' unused footage items.')
             app.endUndoGroup();
-        }
+        };
 
-        function button_cancel_onClick () {
-            palette.close()
-        }
-    }
+        this.button_refresh_onClick = function() {
+            cls.clear();
+            data.items();
+            cls.setlist(
+                data.ids(),
+                data.compnames(),
+                data.ids()
+            );
+            button_remove.enabled = true;
+        };
 
+        this.button_removeunused_onClick = function() {
+            app.beginUndoGroup('Remove Unused Footage');
 
-    { //Global UI
+            var num = app.project.removeUnusedFootage();
+            cls.clear();
+            data.items();
+            cls.setlist(
+                data.ids(),
+                data.compnames(),
+                data.ids()
+            );
+            alert('Removed ' + num + ' unused footage items.');
 
+            app.endUndoGroup();
+        };
 
-        { //Header
+        this.button_cancel_onClick = function() {
+            palette.close();
+        };
+        this.hide = function() {
+            if (!(palette instanceof Panel)) palette.hide();
+        };
+
+        this.setlist = function(
+          inColumn1, inColumn2, inColumn3, inColumn4, inColumn5) {
+            if (inColumn1.length < 1) {
+                var ln1 = listItem.add('item', '');
+                ln1.enabled = false;
+                if (inNumColumns >= 2) {
+                  ln1.subItems[0].text = 'No compositions found in project.';
+                };
+            }
+
+            var item = '';
+            for (var i = 0; i < inColumn1.length; i++) {
+                item = listItem.add('item', inColumn1[i]);
+                if ( inNumColumns >= 2 ) {
+                  item.subItems[0].text = ellipsis(inColumn2[i]);
+                };
+                if ( inNumColumns >= 3 ) {
+                  item.subItems[1].text = ellipsis(inColumn3[i]);
+                };
+                if ( inNumColumns >= 4 ) {
+                  item.subItems[2].text = ellipsis(inColumn4[i]);
+                };
+                if ( inNumColumns >= 5 ) {
+                  item.subItems[3].text = ellipsis(inColumn5[i]);
+                };
+
+                if (inColumn2[i] === 'Invalid destination folder selected.') {
+                  break;
+                }
+            }
+            palette.layout.layout(true);
+        };
+
+        this.clear = function() {
+            for (var i = listItem.items.length - 1; i > -1; i--) {
+                listItem.remove( listItem.items[i] );
+            }
+        };
+
+        this.createUI = function() {
+            if (!inTitle) {
+              var title = '';
+            } else {
+              var title = inTitle;
+            }
+
+            var isPanel = thisObj instanceof Panel;
+            palette = isPanel ? thisObj : new Window(
+                'palette',
+                title,
+                undefined,
+                {
+                  resizeable: false,
+                  alignChildren: ['fill', 'fill'],
+                  preferredSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
+                  margins: 10,
+                  spacing: 10,
+                }
+            );
+            if (palette == null) return;
+
             var headerGroup = palette.add('group', undefined, {
                 name: 'headerGroup',
                 spacing: 10,
                 margins: 10,
-                alignChildren: ['fill','fill'],
-                preferredSize: [900,600]
+                alignChildren: ['fill', 'fill'],
+                preferredSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
             });
-                var headerText = headerGroup.add('statictext',undefined,'The following compositions are not used in any other compositions.\n'+
-                                                 'Double-click on list items to inspect.',{
-                    multiline:true,
-                    name: 'headerText'
-                })
-        } //Header
 
-        { //ListItem
+            var text = 'The following compositions are ';
+            text += 'not used in any other compositions.\n';
+            text += 'Double-click on list items to inspect.';
+
+            headerGroup.add(
+                'statictext', undefined, text, {
+                  multiline: true,
+                  name: 'headerText',
+                }
+            );
+
             var listGroup = palette.add('group', undefined, {
                 name: 'listGroup',
                 spacing: 10,
                 margins: 10,
-                preferredSize: [900, 600]
+                preferredSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
             });
 
-            var listItem = listGroup.add('listbox',undefined, '', {
+            listItem = listGroup.add('listbox', undefined, '', {
                 spacing: 0,
                 margins: 0,
                 name: 'listItem',
                 multiselect: true,
-                numberOfColumns: numColumns,
+                numberOfColumns: inNumColumns,
                 showHeaders: true,
                 columnTitles: columnTitles,
-                preferredSize: [900, 600],
-                columnWidths: [100, 800]
+                preferredSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
+                minimumSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
+                maximumSize: [WINDOW_WIDTH, WINDOW_HEIGHT],
+                columnWidths: [100, 800],
             });
 
-            listItem.onDoubleClick = function(){
+            listItem.onDoubleClick = function() {
                 var i = app.project.numItems;
                 var project = app.project;
-                var comp, comps = [];
+                var comp;
                 var id = parseInt( listItem.selection[0].text, 10);
-                while (i--){
+                while (i--) {
                     comp = project.item(i+1);
-                    if (comp instanceof CompItem){
-                        if (comp.id == id){
+                    if (comp instanceof CompItem) {
+                        if (comp.id == id) {
                           comp.openInViewer();
                           break;
                         }
                     }
                 }
+            };
+
+            { // Buttons
+                var buttonsGroup = palette.add('group', undefined, {
+                    alignChildren: ['left', 'top'],
+                    orientation: 'row',
+                    spacing: 0,
+                    margins: 0,
+                });
+
+                button_remove = buttonsGroup.add(
+                    'button',
+                    undefined,
+                    'Remove Selected Compositions',
+                    {name: 'button_remove'}
+                );
+                button_remove.onClick = cls.button_remove_onClick;
+
+                var button_refresh = buttonsGroup.add(
+                  'button',
+                  undefined,
+                  'Refresh',
+                  {name: 'button_remove'}
+                );
+                button_refresh.onClick = cls.button_refresh_onClick;
+
+                var button_removeunused = buttonsGroup.add(
+                  'button',
+                  undefined,
+                  'Remove Unused Footage',
+                  {name: 'button_remove'}
+                );
+                button_removeunused.onClick = cls.button_removeunused_onClick;
+
+                var button_cancel = buttonsGroup.add(
+                  'button',
+                  undefined,
+                  'Close',
+                  {name: 'button_cancel'}
+                );
+                button_cancel.onClick = cls.button_cancel_onClick;
             }
-        } //ListItem
+        };
 
-        { //Buttons
-            var buttonsGroup = palette.add('group', undefined, {
-                alignChildren: ['left','top'],
-                orientation: 'row',
-                spacing: 0,
-                margins: 0
-            });
 
-            var button_remove = buttonsGroup.add('button', undefined, 'Remove Selected Compositions', {
-                name: 'button_remove'
-            });
-            button_remove.onClick = button_remove_onClick
+        this.show = function() {
+            cls.createUI();
 
-            var button_refresh = buttonsGroup.add('button', undefined, 'Refresh', {
-                name: 'button_remove'
-            });
-            button_refresh.onClick = button_refresh_onClick
+            data.items();
+            cls.setlist(
+              data.ids(),
+              data.compnames(),
+              data.ids()
+            );
 
-            var button_removeunused = buttonsGroup.add('button', undefined, 'Remove Unused Footage', {
-                name: 'button_remove'
-            });
-            button_removeunused.onClick = button_removeunused_onClick
+            palette.findElement('headerText').size = [listItem.size[0], 50];
 
-            var button_cancel = buttonsGroup.add('button', undefined, 'Close',{
-                name: 'button_cancel'
-            });
-            button_cancel.onClick = button_cancel_onClick
-
-        }
-    }
-
-    //Constructor
-    var cls = function(){
-        this.show = function () {
-            if ( palette.findElement ('listItem').size[1] > 600 ) {
-               palette.findElement ('listItem').size = [ palette.findElement ('listItem').size[0] + 20, 600 ];
+            if (listItem.size[1] > WINDOW_HEIGHT) {
+               listItem.size = [listItem.size[0], WINDOW_HEIGHT];
+            } else {
+              listItem.size = [listItem.size[0], WINDOW_HEIGHT];
             }
-            palette.findElement ('headerText').size = [palette.findElement ('listItem').size[0],50];
-
             palette.layout.layout(true);
             palette.layout.resize();
-            palette.preferredSize = [900,600];
-            //palette.onResizing = palette.onResize = function () { palette.layout.resize(); }
-            if (!(palette instanceof Panel)) palette.show();
-        }
-        this.hide = function () {
-            if (!(palette instanceof Panel)) palette.hide();
-        }
-        this.setlist = function ( inColumn1, inColumn2, inColumn3, inColumn4, inColumn5 ){
-            if (inColumn1.length > 0) {
-                var item = '';
-                for (var i = 0; i < inColumn1.length; i++) {
-                    item = listItem.add('item', inColumn1[i]);
-                    if ( numColumns >= 2 ) { item.subItems[0].text = ellipsis( inColumn2[i] ) };
-                    if ( numColumns >= 3 ) { item.subItems[1].text = ellipsis( inColumn3[i] ) };
-                    if ( numColumns >= 4 ) { item.subItems[2].text = ellipsis( inColumn4[i] ) };
-                    if ( numColumns >= 5 ) { item.subItems[3].text = ellipsis( inColumn5[i] ) };
 
-                    if (inColumn2[i] === 'Invalid destination folder selected.' ) { break }
-                }
-            } else {
-                var ln1 = listItem.add('item', '');
-                ln1.enabled = false;
-                if ( numColumns >= 2 ) { ln1.subItems[0].text = 'No  compositions could be found in this project.' };
-            }
-            palette.layout.layout(true);
-        }
-        this.clear = function () {
-            var item = '';
-            for (var i = listItem.items.length-1; i > -1; i--) {
-                listItem.remove( listItem.items[i] );
-            }
-        }
-    }
-return cls
+            if (!(palette instanceof Panel)) {
+              palette.show();
+            };
+        };
+    };
+    return cls;
 })(
   this,
   'Remove Unused Comps and Footage: List of Unused Compositions',
   3,
-  ['ID','Name', 'Expression Contraint']
+  ['ID', 'Name', 'Expression Contraint']
 );
 
-
-var popup = new ListWindow();
-var unused = new Collect;
-unused.items();
-popup.setlist([unused.ids(), unused.compnames()])
-popup.show()
+try {
+  var popup = new ListWindow();
+  popup.show();
+} catch (e) {
+  alert(e);
+}

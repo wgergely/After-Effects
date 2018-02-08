@@ -1,4 +1,3 @@
-icons/
-icons/*
-com.beakus.AERender/
-com.beakus.AERender/*
+node_modules
+.eslintrc.js
+package.json
