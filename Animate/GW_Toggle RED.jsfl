@@ -1,0 +1,1 @@
+﻿//// tmp//// This command was recorded by Adobe Flash CS5.//var t=fl.getDocumentDOM().getTimeline();for (var i = 0; i < t.layers.length; i++) { 	if (t.layers[i].color=='#F60000') {		if ((t.layers[i].visible==true)) {		t.layers[i].visible=false;		} else {		t.layers[i].visible=true;		}	}}

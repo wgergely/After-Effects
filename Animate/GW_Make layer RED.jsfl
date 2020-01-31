@@ -1,0 +1,1 @@
+﻿//// tmp//// This command was recorded by Adobe Flash CS5.//var t = fl.getDocumentDOM().getTimeline();var l = t.layers[t.currentLayer];var c = '#F60000'var ls = t.getSelectedLayers();for each(var i in ls) {	t.layers[i].color=c;}

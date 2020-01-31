@@ -1,0 +1,1 @@
+﻿//// GW Hide all other layers//// This command was recorded by Adobe Flash CS5.//var t = fl.getDocumentDOM().getTimeline();var l = t.layers[t.currentLayer];t.setLayerProperty('visible', !true, 'all');l.visible=true;

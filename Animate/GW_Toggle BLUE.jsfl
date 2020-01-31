@@ -1,0 +1,1 @@
+﻿//// tmp//// This command was recorded by Adobe Flash CS5.//var t = fl.getDocumentDOM().getTimeline();var c = '#0000ff'for (var i = 0; i < t.layers.length; i++) { 	if ((t.layers[i].color==c)&&(t.layers[i].layerType!=='folder')) {		if ((t.layers[i].visible==true)) {		t.layers[i].visible=false;		} else {		t.layers[i].visible=true;		}	}}
