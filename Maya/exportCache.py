@@ -18,19 +18,61 @@ AI_NODE_ALL =           0xFFFF  ## Bitmask including all node types, used by AiA
 # pylint: disable=all
 import os
 from maya import cmds
-from arnold import (AI_NODE_CAMERA, AI_NODE_SHAPE, AI_NODE_SHADER, AI_NODE_OVERRIDE, AI_NODE_LIGHT)
+import arnold
 
 
 
-def init():
+def find_project_folder(key):
+    """Return the relative path of a project folder.
+
+    Args:
+        key (unicode): The name of a Maya project folder name, eg. 'sourceImages'.
+
+    Return:
+        unicode: The name of the folder that corresponds with `key`.
+
+    """
+    if not key:
+        raise ValueError('Key must be specified.')
+
+    _file_rules = cmds.workspace(
+        fr=True,
+        query=True,
+    )
+
+    file_rules = {}
+    for n, _ in enumerate(_file_rules):
+        m = n % 2
+        k = _file_rules[n - m].lower()
+        if m == 0:
+            file_rules[k] = None
+        if m == 1:
+            file_rules[k] = _file_rules[n]
+
+    key = key.lower()
+    if key in file_rules:
+        return file_rules[key]
+    return key
+
+
+
+
+def export_set_to_ass():
     root = cmds.workspace(q=True, rootDirectory=True)
     layer = cmds.editRenderLayerGlobals(query=True, currentRenderLayer=True)
 
     # Arnold
     path = os.path.abspath(os.path.join(
-        root, 'exports/{ext}', '{layer}.{ext}'))
-    cmds.arnoldExportAss(f=path.format(layer=layer, ext='ass'), cam="camera",
-                         mask=AI_NODE_CAMERA | AI_NODE_SHAPE | AI_NODE_SHADER | AI_NODE_OVERRIDE | AI_NODE_LIGHT)
+        root, u'exports/{ext}', '{layer}.{ext}'))
+    cmds.arnoldExportAss(
+        f=path.format(layer=layer, ext='ass'),
+        cam='camera',
+        mask=arnold.AI_NODE_CAMERA |
+        arnold.AI_NODE_SHAPE |
+        arnold.AI_NODE_SHADER |
+        arnold.AI_NODE_OVERRIDE |
+        arnold.AI_NODE_LIGHT
+    )
 
     # Alembic
     roots = ''

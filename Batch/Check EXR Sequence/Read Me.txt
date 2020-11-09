@@ -1,0 +1,14 @@
+Gergely Wootsch
+hello@gergely-wootsch.com
+=========================
+
+
+Checks for incomplete or empty EXR files in a sequence using 'mch_exrCheck.v2.0.exe' (kindly borrowed from Farmcontrol).
+Optionally removes the found invalid files.
+
+To use drag and drop a folder containing an .EXR sequence or a single .EXR item on the batch file.
+
+The result of the last check is saved to:
+./report/incompletefiles.txt
+./report/sequencecheckreport.txt
+

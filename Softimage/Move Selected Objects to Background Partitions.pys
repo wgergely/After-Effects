@@ -1,0 +1,54 @@
+# Move selected objects to background partitions
+ 
+# created by Gareth Bell
+ 
+# original created in VBScript 28-11-11
+# converted to Python 26-07-2012
+ 
+ 
+# Description:
+# This script will put the selected objects into either the current passes bg partitions or, if selected, multiple passes bg partitions
+ 
+##################################
+ 
+# To use:  select objects and passes. Run.
+ 
+##################################
+ 
+import win32com
+xsi = Application
+ 
+#create collections to store objects
+geoColl = win32com.client.Dispatch( "XSI.Collection" )
+passesColl = win32com.client.Dispatch( "XSI.Collection" )
+lightsColl = win32com.client.Dispatch( "XSI.Collection" )
+ 
+selection = win32com.client.Dispatch( "XSI.Collection" )
+selection.AddItems (xsi.Selection)
+ 
+#sort selection into collections (objects, lights and passes)
+for obj in selection:
+          if obj.type == "light":
+                   lightsColl.AddItems (obj)
+          elif obj.type == "Pass":
+                   passesColl.AddItems (obj)
+          else:
+                   geoColl.AddItems (obj)
+                  
+passCount = passesColl.Count
+ 
+#decide if sorting is in only the current pass or multiple passes
+if passCount > 0:
+          for eachPass in passesColl:     
+			print str(geoColl) + " has/have been put into the background partition in " + str(eachPass.name)
+			xsi.MoveToPartition(str(eachPass) + ".background_objects_partition", geoColl, eachPass)
+			print str(lightsColl) + " has/have been put into the background partition in " + str(eachPass.name)
+			xsi.MoveToPartition(str(eachPass) + ".background_lights_partition", lightsColl, eachPass)
+else:
+	currentPass = xsi.ActiveProject.ActiveScene.ActivePass
+	print str(geoColl) + " has/have been put into the background partition in the current pass"
+	xsi.MoveToPartition(str(currentPass) + ".background_objects_partition", geoColl, currentPass)               
+	print str(lightsColl) + " has/have been put into the background partition in the current pass"
+	xsi.MoveToPartition(str(currentPass) + ".background_lights_partition", lightsColl, currentPass)    
+				   
+			

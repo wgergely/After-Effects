@@ -1,0 +1,55 @@
+/*Your styles*/
+
+ body {
+    margin: 0 10px;
+    overflow: hidden;
+}
+
+
+#content {
+    margin-left:0;
+    vertical-align:left;
+    width:100%;
+    overflow: hidden;
+}
+
+.float {
+    float: left;
+}
+
+.info {
+    font-size: 8px;
+    text-align: left;
+    width:100%;
+    margin-left:1px 0;
+}
+
+.sep{
+    float: left;
+    background-color: rgba(0,0,0,0.4);
+    width:1px;
+    height: 38px;
+    margin: 0px 4px;
+}
+
+#btn6{
+margin-top:10px;
+}
+/*
+Those classes will be edited at runtime with values specified
+by the settings of the CC application
+*/
+.hostFontColor{}
+.hostFontFamily{}
+.hostFontSize{}
+
+/*font family, color and size*/
+.hostFont{}
+/*background color*/
+.hostBgd{}
+/*lighter background color*/
+.hostBgdLight{}
+/*darker background color*/
+.hostBgdDark{}
+/*background color and font*/
+.hostElt{}

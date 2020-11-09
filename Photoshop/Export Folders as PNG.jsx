@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
   var parentPath;
   var oFile;
   var oExt;
@@ -28,7 +28,8 @@
     toggleVisibility();
     oLyrName = app.activeDocument.activeLayer.name.replace(/([^a-z0-9]+)/gi, '_');
     oExt = 'png'
-    oFile = new File(oParent + '/' + oDocName + '_' + oLyrName + '.' + oExt);
+    //oFile = new File(oParent + '/' + oDocName + '_' + oLyrName + '.' + oExt);
+    oFile = new File(oParent + '/' + oLyrName + '.' + oExt);
     SaveForWeb(oFile.fsName, 'PN24', true);
     toggleVisibility();
     popup(oFile.fsName);

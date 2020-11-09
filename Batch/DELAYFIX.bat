@@ -1,0 +1,6 @@
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.80 profile=domain,private program="%WinDir%\system32\services.exe" service=any
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.28 profile=domain,private program="%WinDir%\system32\services.exe" service=any
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.31 profile=domain,private program="%WinDir%\system32\services.exe" service=any
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.27 profile=domain,private program="%WinDir%\system32\services.exe" service=any
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.29 profile=domain,private program="%WinDir%\system32\services.exe" service=any
+netsh AdvFirewall firewall add rule name=PsExec dir=in action=allow protocol=TCP localport=RPC RemoteIP=192.168.1.23 profile=domain,private program="%WinDir%\system32\services.exe" service=any

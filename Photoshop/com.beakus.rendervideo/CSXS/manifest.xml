@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExtensionManifest Version="5.0" ExtensionBundleId="com.beakus.rendervideo" ExtensionBundleVersion="1.0.6"
+		ExtensionBundleName="com.beakus.rendervideo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<ExtensionList>
+		<Extension Id="com.beakus.rendervideo" Version="1.0.6" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+            <Host Name="PHXS" Version="[14.0,15.9]" />
+			<Host Name="PHSP" Version="[14.0,15.9]" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="5.0" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="com.beakus.rendervideo">
+			<DispatchInfo >
+				<Resources>
+				<MainPath>./index.html</MainPath>
+				<ScriptPath>./jsx/hostscript.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>BEAKUS Render Video</Menu>
+					<Geometry>
+						<Size>
+							<Height>34</Height>
+							<Width>450</Width>
+						</Size>
+                    <MinSize>
+                            <Height>34</Height>
+                            <Width>450</Width>
+                        </MinSize>
+                        <MaxSize>
+                            <Height>34</Height>
+                            <Width>450</Width>
+                        </MaxSize>
+                        
+					</Geometry>
+					<Icons>
+						<Icon Type="Normal">./icons/iconNormal.png</Icon>
+						<Icon Type="RollOver">./icons/iconRollover.png</Icon>
+						<Icon Type="Disabled">./icons/iconDisabled.png</Icon>
+						<Icon Type="DarkNormal">./icons/iconDarkNormal.png</Icon>
+						<Icon Type="DarkRollOver">./icons/iconDarkRollover.png</Icon>
+					</Icons>					
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>

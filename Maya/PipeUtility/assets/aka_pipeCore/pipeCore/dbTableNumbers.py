@@ -1,0 +1,60 @@
+CL_client_id = 0
+CL_Name = 1
+CL_Abbreviation = 2
+CL_Active = 3
+CL_User = 4
+
+PR_project_id = 0
+PR_client_id = 1
+PR_Name = 2
+PR_Abbreviation = 3
+PR_NetworkPath = 4
+PR_Status = 5
+PR_Thumbnail = 6
+PR_CreationDate = 7
+PR_Notes = 8
+PR_User = 9
+PR_FPS = 10
+PR_AssetColorIndex = 11
+PR_MeshColorIndex = 12
+
+SE_sequence_id = 0
+SE_project_id = 1
+SE_SequenceCode = 2
+SE_Label = 3
+SE_Color = 4
+SE_User = 5
+
+SH_shot_id = 0
+SH_sequence_id = 1
+SH_project_id = 2
+SH_ShotCode = 3
+SH_SequenceCode = 4
+SH_Label = 5
+SH_Thumbnail = 6
+SH_InFrame = 7
+SH_OutFrame = 8
+SH_Description = 9
+SH_Notes = 10
+SH_ShotAssets = 11
+SH_Progress = 12
+SH_User = 13
+SH_WipAliases = 14
+SH_OutOfDate = 15
+
+AS_asset_id = 0
+AS_project_id = 1
+AS_Name = 2
+AS_Type = 3
+AS_Description = 4
+AS_Notes = 5
+AS_Tags = 6
+AS_Progress = 7
+AS_User = 8
+AS_VersionMap = 9
+AS_Color = 10
+AS_ColorIndex = 11
+
+CO_color_id = 0
+CO_RandColor = 1
+CO_Color = 2
